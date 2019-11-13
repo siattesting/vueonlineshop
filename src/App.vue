@@ -1,12 +1,40 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="nav" class="wrapper flex-col flex-col--align-center">
+      <h1 class="flex-col--2">My Vue Online Store</h1>
+      <div class="flex-col--2 nav-items">
+        <router-link to="/" class="nav-items__item">Home</router-link>
+        <router-link to="/about" class="nav-items__item">About</router-link>
+        <router-link :to="{ name: 'gender-overview', params: { gender: 'women'}}" class="nav-items__item">Women</router-link>
+        <router-link :to="{ name: 'gender-overview', params: { gender: 'men'}}" class="nav-items__item">Men</router-link>
+        
+        <router-link to="/cart" class="nav-items__item">
+        Cart
+        <counter-badge :count="cartCount"></counter-badge>
+        </router-link>
+        
+        
+      </div>
     </div>
     <router-view />
+    <footer><a href="https://medium.com/@magyarn/building-an-online-store-with-vue-cli-part-7-8e7c84172e19">Inspired By medium.com/@magyarn</a></footer>
   </div>
 </template>
+
+<script>
+import CounterBadge from "@/components/CounterBadge";
+export default {
+  name: "app",
+  components: {
+    CounterBadge,
+  },
+  computed: {
+    cartCount() {
+      return this.$store.state.cart.length;
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -28,5 +56,15 @@
       color: #42b983;
     }
   }
+}
+
+.nav-items__item {
+  margin-left: 1rem;
+  position: relative;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
 }
 </style>
